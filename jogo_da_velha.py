@@ -6,7 +6,7 @@ import pygame #importa a biblioteca pygame para o script
 pygame.init() #inicialização do pygame
 pygame.font.init() #inicialização do pacote de fontes no pygame
 
-screen = pygame.display.set_mode((500, 500)) #definição do tamanho da tela
+screen = pygame.display.set_mode((600, 600)) #definição do tamanho da tela
 pygame.display.set_caption('Jogo da Velha') #nome da janela do jogo
 clock = pygame.time.Clock() #biblioteca de tempo
 
@@ -29,15 +29,19 @@ while running:
             cor_fundo = cor_fundo + 1
             if(cor_fundo > 3):
                 cor_fundo = 1
- 
-    if cor_fundo == 1:
-        screen.fill('black')
-        screen.blit(personagem_x,(250,250))
-    elif cor_fundo == 2:
-        screen.fill('black')
-        screen.blit(personagem_y,(250,250))
-    else:
-        screen.fill('purple')
+    
+    #Desenha tabuleiro
+    #                                 origem      destino    
+    #                                ( x , y)   ( x , y ) 
+    pygame.draw.line(screen, 'white',(200, 0), (200, 600), 10)
+    pygame.draw.line(screen, 'white',(400, 0), (400, 600), 10)
+    pygame.draw.line(screen, 'white',(0, 200), (600, 200), 10)
+    pygame.draw.line(screen, 'white',(0, 400), (600, 400), 10)
+
+    #                          x  y
+    screen.blit(personagem_x,(60,30)) #primeiro
+    screen.blit(personagem_y,(260,30)) #segundo
+    screen.blit(personagem_y,(460,30)) #terceiro
 
 
     # flip() o display para atualizar a página
