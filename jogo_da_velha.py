@@ -44,6 +44,7 @@ def desenha_tabuleiro(espessura, cor):
     pygame.draw.line(screen, cor ,(0, 400), (600, 400), espessura)
 
 def faz_jogada():
+    print('entrei')
     global q1, q2, q3, q4, q5, q6, q7, q8, q9
     status = True
     if q1 == '' and coordenada_x > 0 and coordenada_x < 200 and coordenada_y< 200:
@@ -78,6 +79,29 @@ def faz_jogada():
     
     return status
 
+def check_vencedor():
+    status = False
+    if q1 == q2 == q3 != '':
+        pygame.draw.line(screen, 'orange' ,(50, 100), (550, 100), 10)
+        status = True
+    elif q4 == q5 == q6 != '':
+        pygame.draw.line(screen, 'orange' ,(50, 300), (550, 300), 10)
+        status = True
+    elif q7 == q8 == q9 != '':
+        pygame.draw.line(screen, 'orange' ,(50, 500), (550, 500), 10)
+        status = True
+    elif q1 == q4 == q7 != '':
+        status = True
+    elif q2 == q5 == q8 != '':
+        status = True
+    elif q3 == q6 == q9 != '':
+        status = True
+    elif q1 == q5 == q9 != '':
+        status = True
+    elif q3 == q5 == q7 != '':
+        status = True
+    return status
+
 while running:
     # controle de enventos no jgo
     for event in pygame.event.get():
@@ -89,20 +113,26 @@ while running:
             click_pos = pygame.mouse.get_pos() # a posição do mouse quando houve o evento de click
             coordenada_x = click_pos[0]
             coordenada_y = click_pos[1]
- 
+
+            if(rodadas >= 9):
+                screen.fill('black')
+                rodadas = 0
+                coordenada_x = 0
+                coordenada_y = 0
+                jogador_atual = personagem_x
+                tabuleiro_desenhado = False
+                break
             if(faz_jogada()):
                 rodadas = rodadas + 1
                 if jogador_atual == personagem_x:
                     jogador_atual = personagem_o
                 else:
                     jogador_atual = personagem_x
-
+                if(check_vencedor()):
+                    rodadas = 9
+                    
 
             
-
-
- 
-
     if tabuleiro_desenhado == False:
         desenha_tabuleiro(50, 'yellow')
         q1 = ''
